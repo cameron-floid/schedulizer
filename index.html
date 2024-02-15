@@ -13,13 +13,16 @@
 
     <header>
         <div class="header-col logo">
-            <img class="logo" src="assets/logo/icon.png" alt="">
+            <a href="/">
+                <img class="logo" src="assets/logo/icon.png" alt="">
+                <p class="logo-text">Schedulizer</p>
+            </a>
         </div>
         <div class="header-col menu">
             <nav>
                 <ul>
-                    <li><a class="header-btn" href="#">Upload JSON</a></li>
-                    <li><a class="header-btn" href="#">Signin</a></li>
+                    <li><a class="btn primary-btn" href="#">Upload JSON</a></li>
+                    <li><a class="btn primary-btn" href="#">Signin</a></li>
                 </ul>
             </nav>
         </div>
@@ -39,23 +42,28 @@
                         <div class="button-group">
 
                             <div class="btn-option">
-                                <input type="radio" id="fcfs" name="options" value="fcfs" checked>
+                                <input type="radio" id="fcfs" name="algorithm" value="fcfs" checked>
                                 <label for="fcfs">FCFS</label>
                             </div>
 
                             <div class="btn-option">
-                                <input type="radio" id="sjf" name="options" value="sjf">
+                                <input type="radio" id="sjf" name="algorithm" value="sjf">
                                 <label for="sjf">SJF</label>
                             </div>
 
                             <div class="btn-option">
-                                <input type="radio" id="srjf" name="options" value="srjf">
+                                <input type="radio" id="srjf" name="algorithm" value="srjf">
                                 <label for="srjf">SRJF</label>
                             </div>
 
                             <div class="btn-option">
-                                <input type="radio" id="priority" name="options" value="priority">
+                                <input type="radio" id="priority" name="algorithm" value="priority">
                                 <label for="priority">Priority</label>
+                            </div>
+
+                            <div class="btn-option">
+                                <input type="radio" id="rr" name="algorithm" value="priority">
+                                <label for="priority">RR</label>
                             </div>
 
                         </div>
@@ -67,6 +75,52 @@
                     </div>
                     <div class="form-row">
                         <input type="number" name="nprocesses">
+                    </div>
+
+                    <!-- Table for Process Parameters -->
+                    <div class="form-row">
+                        <h3 class="input-header">Process Parameters</h3>
+                    </div>
+                    <div class="form-row">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Process</th>
+                                    <th>Arrival Time</th>
+                                    <th>Burst Time</th>
+                                    <th>Priority</th>
+                                    <th>Queue Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>P1</td>
+                                    <td><input type="number" name="arrival_time_1"></td>
+                                    <td><input type="number" name="burst_time_1"></td>
+                                    <td><input type="number" name="priority_1"></td>
+                                    <td><input type="number" name="queue_1"></td>
+                                </tr>
+                                <tr>
+                                    <td>P2</td>
+                                    <td><input type="number" name="arrival_time_2"></td>
+                                    <td><input type="number" name="burst_time_2"></td>
+                                    <td><input type="number" name="priority_2"></td>
+                                    <td><input type="number" name="queue_2"></td>
+                                </tr>
+                                <tr>
+                                    <td>P2</td>
+                                    <td><input type="number" name="arrival_time_3"></td>
+                                    <td><input type="number" name="burst_time_3"></td>
+                                    <td><input type="number" name="priority_3"></td>
+                                    <td><input type="number" name="queue_3"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-row footer-btns">
+                        <input type="submit" class="btn secondary-btn" value="Visualize">
+                        <input type="reset" class="btn secondary-btn" value="Reset">
                     </div>
 
                 </form>

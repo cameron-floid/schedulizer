@@ -151,18 +151,22 @@ body {
 /* Apply different font styles for different headers */
 h1 {
     font-family: 'Montserrat Alternates', sans-serif;
-    font-weight: 700; /* Example: Bold */
-    font-style: italic; /* Example: Italic */
+    font-weight: 700;
+    /* Example: Bold */
+    font-style: italic;
+    /* Example: Italic */
 }
 
 h2 {
     font-family: 'Montserrat Alternates', sans-serif;
-    font-weight: 400; /* Example: Regular */
+    font-weight: 400;
+    /* Example: Regular */
 }
 
 h3 {
     font-family: 'Montserrat Alternates', sans-serif;
-    font-weight: 300; /* Example: Light */
+    font-weight: 300;
+    /* Example: Light */
 }
 
 /* Apply different font styles for different elements */
@@ -174,10 +178,11 @@ nav {
     font-family: 'Montserrat Alternates', sans-serif;
 }
 
-ul, li, a {
+ul,
+li,
+a {
     font-family: 'Montserrat Alternates', sans-serif;
 }
-
 
 html {
     padding: 0;
@@ -198,7 +203,7 @@ body {
 }
 
 header {
-    height: 4rem;
+    height: 4.5rem;
     background-color: var(--secondary);
     position: absolute;
     top: 0;
@@ -213,22 +218,60 @@ ul {
     list-style-type: none;
 }
 
-.header-btn {
+.header-col li {
+    margin: 0.5rem 0;
+}
+
+.header-col.logo a {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    text-decoration: none;
+}
+
+.btn {
     text-decoration: none;
     border: 1px solid var(--grey);
     padding: 10px;
-    /* border-radius: 5px; */
     margin: .5rem;
-    background: var(--primary);
     color: var(--text-light);
+}
+
+.footer-btns {
+    justify-content: left !important;
+}
+
+.primary-btn {
+    background: var(--primary);
+}
+
+.secondary-btn {
+    background: var(--secondary);
+    margin-top: 1rem;
+    margin-right: .5rem;
 }
 
 .header-col {
     margin: 0 1.5rem;
+    display: flex;
 }
 
-.header-btn:hover {
+.logo-text {
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-weight: 500;
+    margin: 0;
+    padding: 1rem .2rem;
+}
+
+.btn:hover {
     box-shadow: 4px 4px 0 0 var(--grey);
+}
+
+.secondary-btn:hover {
+    background: var(--primary);
+    box-shadow: 4px 4px 0 0 var(--secondary);
+    border: 1px solid var(--background);
 }
 
 footer {
@@ -249,14 +292,14 @@ footer {
 .view-port {
     background-color: var(--background);
     display: flex;
-    height: 75vh;
+    height: 74vh;
     width: auto;
     justify-content: space-evenly;
-    margin: 5rem 0;
+    margin: 6rem 0;
 }
 
 .control-panel {
-    flex: .3;
+    flex: .33;
     width: 100%;
     border: 1px solid var(--secondary);
     background-color: var(--grey);
@@ -312,7 +355,7 @@ textarea {
     font-family: 'Montserrat Alternates', sans-serif;
     padding: 10px;
     margin: 0.5rem 0;
-    width: 85%;
+    width: 95%;
     background: transparent;
     border: 1px solid var(--background);
     color: var(--text-dark);
@@ -335,6 +378,56 @@ textarea {
 /* Style the input field on focus */
 input:focus,
 textarea:focus {
+    border-color: var(--secondary);
+    outline: none;
+}
+
+
+/* Process table */
+/* Style the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+/* Style table header */
+thead {
+    color: var(--text-dark);
+    border: 1px solid var(--secondary);
+}
+
+/* Style table header cells */
+th {
+    padding: 10px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 1rem;
+}
+
+/* Style table body rows */
+tbody tr:nth-child(even) {
+    background-color: var(--grey);
+}
+
+/* Style table body cells */
+td {
+    padding: 5px 10px;
+}
+
+/* Style input fields within the table */
+table input[type="number"] {
+    font-family: 'Montserrat Alternates', sans-serif;
+    padding: 5px;
+    width: 70px;
+    border: 1px solid var(--background);
+    background: transparent;
+    color: var(--text-dark);
+    width: 100%;
+}
+
+/* Style input fields on focus within the table */
+table input[type="number"]:focus {
     border-color: var(--secondary);
     outline: none;
 }
