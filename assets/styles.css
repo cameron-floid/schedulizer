@@ -1,0 +1,340 @@
+:root {
+    --background: #EBE4D1;
+    --grey: #B4B4B3;
+    --secondary: #26577C;
+    --primary: #FD8D14;
+    --text-light: #F4F4F2;
+    --text-dark: #495464;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* Define @font-face rules for each font style */
+@font-face {
+    font-family: 'Montserrat Alternates';
+    src: url('assets/montserrat-alternatives/MontserratAlternates-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/* Define @font-face rules for other font weights and styles */
+
+/* Apply the font-family to appropriate elements */
+body {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+/* Apply different font styles for different headers */
+h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 700; /* Example: Bold */
+    font-style: italic; /* Example: Italic */
+}
+
+h2 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 400; /* Example: Regular */
+}
+
+h3 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 300; /* Example: Light */
+}
+
+/* Apply different font styles for different elements */
+header {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+nav {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+ul, li, a {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--background);
+}
+
+.logo {
+    height: 3rem;
+    width: auto;
+    margin: .5rem;
+    fill: var(--primary);
+}
+
+header {
+    height: 4rem;
+    background-color: var(--secondary);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.header-btn {
+    text-decoration: none;
+    border: 1px solid var(--grey);
+    padding: 10px;
+    /* border-radius: 5px; */
+    margin: .5rem;
+    background: var(--primary);
+    color: var(--text-light);
+}
+
+.header-col {
+    margin: 0 1.5rem;
+}
+
+.header-btn:hover {
+    box-shadow: 4px 4px 0 0 var(--grey);
+}
+
+footer {
+    height: 5rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    background-color: var(--secondary);
+}
+
+.footer {
+    margin: auto;
+    color: var(--text-light);
+}
+
+
+.view-port {
+    background-color: var(--background);
+    display: flex;
+    height: 75vh;
+    width: auto;
+    justify-content: space-evenly;
+    margin: 5rem 0;
+}
+
+.control-panel {
+    flex: .3;
+    width: 100%;
+    border: 1px solid var(--secondary);
+    background-color: var(--grey);
+    display: flex;
+}
+
+.visual-panel {
+    flex: .6;
+    width: 100%;
+    border: 1px solid var(--secondary);
+    background-color: var(--grey);
+}
+
+.container {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+}
+
+.button-group {
+    display: inline-flex;
+}
+
+.button-group input[type="radio"] {
+    display: none;
+}
+
+.button-group label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--grey);
+    color: var(--text-dark);
+    cursor: pointer;
+    border: 1px solid var(--background);
+}
+
+.button-group input[type="radio"]:checked+label {
+    background-color: var(--secondary);
+    color: var(--text-light);
+    border-color: var(--grey);
+}
+
+.btn-option {
+    margin: .15rem;
+}
+
+/* Apply consistent font-family to input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+    font-family: 'Montserrat Alternates', sans-serif;
+    padding: 10px;
+    margin: 0.5rem 0;
+    width: 85%;
+    background: transparent;
+    border: 1px solid var(--background);
+    color: var(--text-dark);
+}
+
+/* Style the input header */
+.input-header {
+    color: var(--text-dark);
+    font-weight: 500;
+    text-align: left;
+    margin: 1rem .2rem 0rem;
+}
+
+.form-row {
+    display: flex;
+    width: 93%;
+    justify-content: space-between;
+}
+
+/* Style the input field on focus */
+input:focus,
+textarea:focus {
+    border-color: var(--secondary);
+    outline: none;
+}

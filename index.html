@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="shortcut icon" href="assets/logo/icon.png" type="image/x-icon">
+    <title>Schedulizer - Algorithm Visualizer</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-col logo">
+            <img class="logo" src="assets/logo/icon.png" alt="">
+        </div>
+        <div class="header-col menu">
+            <nav>
+                <ul>
+                    <li><a class="header-btn" href="#">Upload JSON</a></li>
+                    <li><a class="header-btn" href="#">Signin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="view-port">
+
+        <div class="control-panel">
+            <div class="container">
+                <form action="">
+
+                    <div class="form-row">
+                        <h3 class="input-header">Algorithm</h3>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="button-group">
+
+                            <div class="btn-option">
+                                <input type="radio" id="fcfs" name="options" value="fcfs" checked>
+                                <label for="fcfs">FCFS</label>
+                            </div>
+
+                            <div class="btn-option">
+                                <input type="radio" id="sjf" name="options" value="sjf">
+                                <label for="sjf">SJF</label>
+                            </div>
+
+                            <div class="btn-option">
+                                <input type="radio" id="srjf" name="options" value="srjf">
+                                <label for="srjf">SRJF</label>
+                            </div>
+
+                            <div class="btn-option">
+                                <input type="radio" id="priority" name="options" value="priority">
+                                <label for="priority">Priority</label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <h3 class="input-header">Number of Processes</h3>
+                    </div>
+                    <div class="form-row">
+                        <input type="number" name="nprocesses">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="visual-panel">
+
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+            <p>&copy; Schedulizer <span id="year"></span></p>
+        </div>
+    </footer>
+
+</body>
+<script src="assets/scripts.js"></script>
+
+</html>
