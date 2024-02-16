@@ -30,92 +30,92 @@
 
     <div class="view-port">
 
-        <div class="control-panel">
+        <div class="control-panel scrollable">
             <div class="container">
                 <form action="">
 
-                    <div class="form-row">
-                        <h3 class="input-header">Algorithm</h3>
-                    </div>
-                    <div class="form-row">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <h3 class="input-header">Algorithm</h3>
+                        </div>
+                        <div class="form-row">
 
-                        <div class="button-group">
+                            <div class="button-group">
 
-                            <div class="btn-option">
-                                <input type="radio" id="fcfs" name="algorithm" value="fcfs" checked>
-                                <label for="fcfs">FCFS</label>
-                            </div>
+                                <div class="btn-option">
+                                    <input type="radio" id="fcfs" name="algorithm" value="fcfs" checked>
+                                    <label for="fcfs">FCFS</label>
+                                </div>
 
-                            <div class="btn-option">
-                                <input type="radio" id="sjf" name="algorithm" value="sjf">
-                                <label for="sjf">SJF</label>
-                            </div>
+                                <div class="btn-option">
+                                    <input type="radio" id="sjf" name="algorithm" value="sjf">
+                                    <label for="sjf">SJF</label>
+                                </div>
 
-                            <div class="btn-option">
-                                <input type="radio" id="srjf" name="algorithm" value="srjf">
-                                <label for="srjf">SRJF</label>
-                            </div>
+                                <div class="btn-option">
+                                    <input type="radio" id="srjf" name="algorithm" value="srjf">
+                                    <label for="srjf">SRJF</label>
+                                </div>
 
-                            <div class="btn-option">
-                                <input type="radio" id="priority" name="algorithm" value="priority">
-                                <label for="priority">Priority</label>
-                            </div>
+                                <div class="btn-option">
+                                    <input type="radio" id="priority" name="algorithm" value="priority">
+                                    <label for="priority">Priority</label>
+                                </div>
 
-                            <div class="btn-option">
-                                <input type="radio" id="rr" name="algorithm" value="priority">
-                                <label for="priority">RR</label>
+                                <div class="btn-option">
+                                    <input type="radio" id="rr" name="algorithm" value="rr">
+                                    <label for="rr">RR</label>
+                                </div>
+
+                                <div class="btn-option">
+                                    <input type="radio" id="mq" name="algorithm" value="mq">
+                                    <label for="mq">Multi Queue</label>
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
 
-                    <div class="form-row">
-                        <h3 class="input-header">Number of Processes</h3>
-                    </div>
-                    <div class="form-row">
-                        <input type="number" name="nprocesses">
+                    <div id="time-quantum-group" class="form-group">
+                        <div class="form-row">
+                            <h3 class="input-header">Time Quantum</h3>
+                        </div>
+                        <div class="form-row">
+                            <input type="number" name="quantum" min="0">
+                        </div>
                     </div>
 
-                    <!-- Table for Process Parameters -->
-                    <div class="form-row">
-                        <h3 class="input-header">Process Parameters</h3>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <h3 class="input-header">Number of Processes</h3>
+                        </div>
+                        <div class="form-row">
+                            <input type="number" name="nprocesses" min="0">
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Process</th>
-                                    <th>Arrival Time</th>
-                                    <th>Burst Time</th>
-                                    <th>Priority</th>
-                                    <th>Queue Number</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>P1</td>
-                                    <td><input type="number" name="arrival_time_1"></td>
-                                    <td><input type="number" name="burst_time_1"></td>
-                                    <td><input type="number" name="priority_1"></td>
-                                    <td><input type="number" name="queue_1"></td>
-                                </tr>
-                                <tr>
-                                    <td>P2</td>
-                                    <td><input type="number" name="arrival_time_2"></td>
-                                    <td><input type="number" name="burst_time_2"></td>
-                                    <td><input type="number" name="priority_2"></td>
-                                    <td><input type="number" name="queue_2"></td>
-                                </tr>
-                                <tr>
-                                    <td>P2</td>
-                                    <td><input type="number" name="arrival_time_3"></td>
-                                    <td><input type="number" name="burst_time_3"></td>
-                                    <td><input type="number" name="priority_3"></td>
-                                    <td><input type="number" name="queue_3"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div class="form-group">
+
+                        <!-- Table for Process Parameters -->
+                        <div class="form-row">
+                            <h3 class="input-header">Process Parameters</h3>
+                        </div>
+                        <div class="form-row">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Process</th>
+                                        <th id="arrivalimeHeader">Arrival Time</th>
+                                        <th id="burstTimeHeader">Burst Time</th>
+                                        <th id="priorityHeader">Priority</th>
+                                        <th id="queueHeader">Queue Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            
+                        </div>
                     </div>
 
                     <div class="form-row footer-btns">

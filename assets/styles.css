@@ -298,12 +298,27 @@ footer {
     margin: 6rem 0;
 }
 
-.control-panel {
+/* .control-panel {
     flex: .33;
     width: 100%;
     border: 1px solid var(--secondary);
     background-color: var(--grey);
     display: flex;
+} */
+
+.control-panel {
+    flex: 0.33;
+    width: 100%;
+    border: 1px solid var(--secondary);
+    background-color: var(--grey);
+    display: flex;
+    min-height: 150px; /* Set a minimum height for the control panel */
+    overflow-y: auto; /* Add vertical scroll if content exceeds the height */
+}
+
+.control-panel.scrollable {
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .visual-panel {
@@ -321,6 +336,11 @@ footer {
 
 .button-group {
     display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
 }
 
 .button-group input[type="radio"] {
@@ -430,4 +450,32 @@ table input[type="number"] {
 table input[type="number"]:focus {
     border-color: var(--secondary);
     outline: none;
+}
+
+.scrollable {
+    overflow: hidden;
+    overflow-y: scroll;
+    /* max-height: 100px; */
+}
+
+/* Show the scrollbar for vertical scrolling */
+.scrollable::-webkit-scrollbar {
+    width: 12px;
+    margin-left: 1rem;
+}
+
+/* Track */
+.scrollable::-webkit-scrollbar-track {
+    background: var(--grey);
+    border: 1px solid var(--background);
+}
+
+/* Handle */
+.scrollable::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+}
+
+/* Handle on hover */
+.scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }
