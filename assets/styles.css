@@ -288,6 +288,11 @@ footer {
     color: var(--text-light);
 }
 
+.footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
 
 .view-port {
     background-color: var(--background);
