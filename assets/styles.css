@@ -484,3 +484,31 @@ table input[type="number"]:focus {
 .scrollable::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
 }
+
+/* queue row styles */
+
+/* Style the select field */
+select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid var(--background);
+    background: transparent;
+    border-radius: 0; /* Ensure sharp corners */
+}
+
+select:focus-visible {
+    outline: none;
+}
+
+/* Style the options */
+select option {
+    padding: 8px;
+    font-size: 14px;
+    background: var(--grey);
+    border: 1px solid var(--background);
+}
+
+/* Highlight color on hover */
+select option:hover {
+    background: var(--primary); /* Change to primary color on hover */
+}

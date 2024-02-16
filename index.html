@@ -86,6 +86,33 @@
                         </div>
                     </div>
 
+                    <div id="number-of-queues-group" class="form-group" style="display: none;">
+                        <div class="form-row">
+                            <h3 class="input-header">Number of Queues</h3>
+                        </div>
+                        <div class="form-row">
+                            <input type="number" name="nqueues" id="nqueues" min="0">
+                        </div>
+                    </div>                  
+
+                    <div id="queue-attributes-group" class="form-group" style="display: none;">
+                        <div class="form-row">
+                            <h3 class="input-header">Queue Attributes</h3>
+                        </div>
+                        <div class="form-row">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Queue</th>
+                                        <th>Algorithm</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="queue-attributes-body"></tbody>
+                            </table>
+                        </div>
+                    </div>  
+
                     <div class="form-group">
                         <div class="form-row">
                             <h3 class="input-header">Number of Processes</h3>
@@ -112,7 +139,7 @@
                                         <th id="queueHeader" style="display: none;">Queue Number</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody id="process-attributes-body"></tbody>
                             </table>
                             
                         </div>
