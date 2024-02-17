@@ -20,17 +20,11 @@ Schedulizer is a web-based application that visualizes various CPU scheduling al
 
 1. Clone the repository:
 Save to grepper
-git clone https://github.com/username/schedulizer.git
-
-css
-Copy code
+git clone https://github.com/cameron-floid/schedulizer
 
 2. Navigate to the project directory:
 Save to grepper
 cd schedulizer
-
-markdown
-Copy code
 
 3. Open the `index.html` file in your web browser.
 

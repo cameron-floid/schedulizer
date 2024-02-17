@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleHeadersAndColumns(selectedAlgorithm) {
         const priorityHeader = document.getElementById("priorityHeader");
         const queueHeader = document.getElementById("queueHeader");
-        const queueCells = document.querySelectorAll('.queue');
+        const queueCells = document.querySelectorAll('.queue-cell');
         const priorityCells = document.querySelectorAll('.priority');
         const numberOfQueuesGroup = document.getElementById("number-of-queues-group");
         const queueAttributesGroup = document.getElementById("queue-attributes-group");
-    
+
         if (selectedAlgorithm === "fcfs" || selectedAlgorithm === "sjf" || selectedAlgorithm === "srjf") {
             // For algorithms where priority and queue are not used
             priorityHeader.style.display = "none";
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             numberOfQueuesGroup.style.display = "block";
             queueAttributesGroup.style.display = "block";
         }
-    }    
+    }
 
     // Function to toggle visibility of the time quantum group
     function toggleTimeQuantumGroup(selectedAlgorithm) {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td><input type="number" name="arrival_time_${i}" min="0"></td>
                 <td><input type="number" name="burst_time_${i}" min="0"></td>
                 <td class="priority" style="display: none;"><input type="number" name="priority_${i}" min="0"></td>
-                <td class="queue" style="display: none;"><input type="number" name="queue_${i}" min="0"></td>
+                <td class="queue-cell" style="display: none;"><input type="number" name="queue_${i}" min="0"></td>
             `;
             processAttributesBody.appendChild(newRow);
         }
@@ -123,8 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
             newRow.innerHTML = `
                 <td>Q${i}</td>
                 <td>
-                    <select name="algorithm_q${i}">
-                        <option value="fcfs" selected>FCFS</option>
+                    <select class="form-select" name="algorithm_q${i}">
+                        <option value="" disabled selected>Choose</option> 
+                        <option value="fcfs">FCFS</option>
                         <option value="sjf">SJF</option>
                         <option value="srjf">SRJF</option>
                         <option value="priority">Priority</option>
@@ -132,9 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     </select>
                 </td>
                 <td><input type="number" name="priority_q${i}" min="0"></td>
-                `;
+            `;
             queueAttributesBody.appendChild(newRow); // Append rows to the queue attributes table body
         }
+
     });
 
     // Call the function to set the current year

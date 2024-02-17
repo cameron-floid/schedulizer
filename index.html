@@ -36,7 +36,7 @@
 
                     <div class="form-group">
                         <div class="form-row">
-                            <h3 class="input-header">Algorithm</h3>
+                            <h3 class="header-text">Algorithm</h3>
                         </div>
                         <div class="form-row">
 
@@ -79,7 +79,7 @@
 
                     <div id="time-quantum-group" class="form-group" style="display: none;">
                         <div class="form-row">
-                            <h3 class="input-header">Time Quantum</h3>
+                            <h3 class="header-text">Time Quantum</h3>
                         </div>
                         <div class="form-row">
                             <input type="number" name="quantum" min="0">
@@ -88,7 +88,7 @@
 
                     <div id="number-of-queues-group" class="form-group" style="display: none;">
                         <div class="form-row">
-                            <h3 class="input-header">Number of Queues</h3>
+                            <h3 class="header-text">Number of Queues</h3>
                         </div>
                         <div class="form-row">
                             <input type="number" name="nqueues" id="nqueues" min="0">
@@ -97,7 +97,7 @@
 
                     <div id="queue-attributes-group" class="form-group" style="display: none;">
                         <div class="form-row">
-                            <h3 class="input-header">Queue Attributes</h3>
+                            <h3 class="header-text">Queue Attributes</h3>
                         </div>
                         <div class="form-row">
                             <table>
@@ -115,7 +115,7 @@
 
                     <div class="form-group">
                         <div class="form-row">
-                            <h3 class="input-header">Number of Processes</h3>
+                            <h3 class="header-text">Number of Processes</h3>
                         </div>
                         <div class="form-row">
                             <input type="number" name="nprocesses" min="0">
@@ -126,7 +126,7 @@
 
                         <!-- Table for Process Parameters -->
                         <div class="form-row">
-                            <h3 class="input-header">Process Parameters</h3>
+                            <h3 class="header-text">Process Parameters</h3>
                         </div>
                         <div class="form-row">
                             <table>
@@ -154,7 +154,78 @@
             </div>
         </div>
 
-        <div class="visual-panel">
+        <div class="visual-panel scrollable">
+
+            <div class="visual-group">
+                <div class="visual-row">
+                    <h3 class="header-text">Queues</h3>
+                </div>
+                <div id="queues">
+                    <div class="queue-row header-text-row">
+                        <h3 class="header-text">R.Q</h3>
+                    </div>
+                    <div id="queue" class="queue-row queue">
+                        <div class="process">
+                            <p class="process-label">P1</p>
+                            <p class="process-arrival-time">0</p>
+                            <p class="process-burst-time">12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gantchart" class="gantchart">
+                <!-- add gant chart with the total number of slots equal to the total number of burst times provided  -->
+            </div>
+
+            <div class="stats">
+                <h3 class="header-text">CPU Utilisation Metrics</h3>
+                
+                <div class="stat-row">
+                    <div class="stat-box">
+
+                        <h3 class="header-text">Time Metrics</h3>
+
+                        <div class="metric clock">
+                            <p class="metric-label">Tick</p>
+                            <p class="metric-value">2909</p>
+                        </div>
+
+                        <div class="metric">
+                            <p class="metric-label">Total Ticks</p>
+                            <p class="metric-value">2909</p>
+                        </div>
+
+                        <div class="metric">
+                            <p class="metric-label">First Process Start</p>
+                            <p class="metric-value">0</p>
+                        </div>
+
+                        <div class="metric">
+                            <p class="metric-label">Last Process End</p>
+                            <p class="metric-value">2909</p>
+                        </div>
+
+
+                        <div class="metric">
+                            <p class="metric-label">Total Used Ticks</p>
+                            <p class="metric-value">2909</p>
+                        </div>
+
+                        <div class="metric">
+                            <p class="metric-label">Total Unused Ticks</p>
+                            <p class="metric-value">2909</p>
+                        </div>
+
+                    </div>
+    
+                    <div class="stat-box"></div>
+                    <div class="stat-box"></div>
+                    <div class="stat-box"></div>
+
+                </div>
+                
+            </div>
 
         </div>
 
