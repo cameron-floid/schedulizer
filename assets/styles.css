@@ -241,7 +241,6 @@ ul {
     padding: 10px;
     margin: .5rem;
     color: var(--text-light);
-    border-radius: 5px;
 }
 
 .footer-btns {
@@ -272,12 +271,12 @@ ul {
 }
 
 .btn:hover {
-    box-shadow: 4px 4px 2px 0 var(--grey);
+    box-shadow: 4px 4px 0 0 var(--grey);
 }
 
 .secondary-btn:hover {
     background: var(--primary);
-    box-shadow: 4px 4px 2px 0 var(--secondary);
+    box-shadow: 4px 4px 0 0 var(--secondary);
     /* border: 1px solid var(--text-light); */
     border: 1px solid transparent;
 }
@@ -366,23 +365,55 @@ footer {
 }
 
 .queue-row {
+    overflow-x: auto;
     width: 90%;
     padding: .3rem;
     margin: .5rem auto .5rem auto;
 }
 
-.queue {
-    border: 1px solid var(--secondary);
-    display: flex;
-    justify-content: flex-end;
-}
-
 .process {
+    flex: 0 0 auto;
     width: 3rem;
     height: 3rem;
     background: var(--secondary);
     font-size: .8rem;
     color: var(--text-light);
+    margin: .15rem;
+    white-space: normal;
+}
+
+
+.queue {
+    border: 1px solid var(--secondary);
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.process-label {
+    position: relative;
+    top: auto;
+    left: 25%;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: .8rem;
+    color: var(--text-light);
+    margin: .25rem;
+}
+
+.process-arrival-time,
+.process-burst-time {
+    padding: 1.2px;
+    color: var(--grey);
+    font-size: .5rem;
+}
+
+.process-arrival-time::before {
+    content: "AT: ";
+}
+
+.process-burst-time::before {
+    content: "BT: ";
 }
 
 .stats {
@@ -410,7 +441,7 @@ footer {
 }
 
 .stat-box {
-    flex: .23;
+    flex: .3;
     background: var(--grey);
     border: 1px solid var(--background);
     padding: 5px;
@@ -423,6 +454,7 @@ footer {
     text-transform: uppercase;
     font-size: .8rem;
     text-decoration: underline;
+    color: var(--secondary);
 }
 
 .metric {

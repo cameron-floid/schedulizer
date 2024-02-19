@@ -1,3 +1,86 @@
+class Process {
+    constructor(id, arrivalTime, burstTime, priority = null, queue = null) {
+        this.id = id;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priority = priority;
+        this.queue = queue;
+    }
+}
+
+class ProcessManager {
+    constructor() {
+        this.processes = [];
+    }
+
+    addProcess(process) {
+        this.processes.push(process);
+    }
+
+    removeProcess(processId) {
+        this.processes = this.processes.filter(process => process.id !== processId);
+    }
+
+    getProcesses() {
+        return this.processes;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const processManager = new ProcessManager();
+
+    const nProcessesInput = document.querySelector('input[name="nprocesses"]');
+    nProcessesInput.addEventListener("change", function () {
+        const numberOfProcesses = parseInt(nProcessesInput.value);
+
+        // Clear existing processes
+        processManager.processes = [];
+
+        // Add new processes
+        for (let i = 1; i <= numberOfProcesses; i++) {
+            const process = new Process(`P${i}`, 0, 12); // Example arrival time and burst time
+            processManager.addProcess(process);
+        }
+
+        // Update the display or perform other operations as needed
+        updateProcessDisplay(processManager.getProcesses());
+    });
+
+    function updateProcessDisplay(processes) {
+        const queueElement = document.getElementById("queue");
+        queueElement.innerHTML = ""; // Clear previous content
+
+        processes.forEach(process => {
+            const processElement = document.createElement("div");
+            processElement.classList.add("process");
+            processElement.innerHTML = `
+                <p class="process-arrival-time">${process.arrivalTime}</p>
+                <p class="process-label">${process.id}</p>
+                <p class="process-burst-time">${process.burstTime}</p>
+            `;
+            queueElement.appendChild(processElement);
+        });
+    }
+
+    // Initial setup for processes
+    const initialNumberOfProcesses = parseInt(nProcessesInput.value);
+    for (let i = 1; i <= initialNumberOfProcesses; i++) {
+        const process = new Process(`P${i}`, 0, 12); // Example arrival time and burst time
+        processManager.addProcess(process);
+    }
+
+    // Update the display initially
+    updateProcessDisplay(processManager.getProcesses());
+    
+    // Add processes to the Ready Queue (R.Q)
+    const addProcessesToQueueButton = document.getElementById("add-processes-to-queue");
+    addProcessesToQueueButton.addEventListener("click", function () {
+        const processesInQueue = processManager.getProcesses();
+        // You can perform additional operations here, such as adding the processes to the R.Q.
+        console.log("Processes added to the Ready Queue:", processesInQueue);
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     // Function to set the current year
     function setCopyrightYear() {
