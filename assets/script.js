@@ -104,6 +104,7 @@ class Scheduler {
         return this.queues;
     }
 
+    
     // Method to clear all queues from the scheduler
     clearQueues() {
         this.queues = [];
