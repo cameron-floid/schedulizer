@@ -93,7 +93,7 @@
                         <div class="form-row">
                             <input type="number" name="nqueues" id="nqueues" min="0">
                         </div>
-                    </div>                  
+                    </div>
 
                     <div id="queue-attributes-group" class="form-group" style="display: none;">
                         <div class="form-row">
@@ -111,7 +111,7 @@
                                 <tbody id="queue-attributes-body"></tbody>
                             </table>
                         </div>
-                    </div>  
+                    </div>
 
                     <div class="form-group">
                         <div class="form-row">
@@ -141,7 +141,7 @@
                                 </thead>
                                 <tbody id="process-attributes-body"></tbody>
                             </table>
-                            
+
                         </div>
                     </div>
 
@@ -166,11 +166,13 @@
                     </div>
                     <div id="queue" class="queue-row queue horizontal-scroll">
 
-                        <div class="process">
-                            <p class="process-arrival-time">0</p>
-                            <p class="process-label">P1</p>
-                            <p class="process-burst-time">12</p>
-                        </div>
+                        <!-- 
+                            <div class="process">
+                                <p class="process-arrival-time">0</p>
+                                <p class="process-label">P1</p>
+                                <p class="process-burst-time">12</p>
+                            </div> 
+                        -->
 
                     </div>
                 </div>
@@ -183,7 +185,7 @@
 
             <div class="stats">
                 <h3 class="header-text">CPU Utilisation Metrics</h3>
-                
+
                 <div class="stat-row">
                     <div class="stat-box">
 
@@ -221,12 +223,12 @@
                         </div>
 
                     </div>
-    
+
                     <div class="stat-box"></div>
                     <div class="stat-box"></div>
 
                 </div>
-                
+
             </div>
 
         </div>
@@ -235,11 +237,17 @@
 
     <footer>
         <div class="footer">
-            <p>&copy; Schedulizer <span id="year"></span>. Coded by <a target="_blank" href="https://www.linkedin.com/in/cameronfloid">Came'ron</a> in Zambia &#128420;.</p>
+            <p>&copy; Schedulizer <span id="year"></span>. Coded by <a target="_blank"
+                    href="https://www.linkedin.com/in/cameronfloid">Came'ron</a> in Zambia &#128420;.</p>
         </div>
     </footer>
 
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+
 </body>
-<script src="assets/scripts.js"></script>
+<script src="assets/script.js"></script>
 
 </html>

@@ -645,6 +645,35 @@ table input[type="number"]:focus {
 
 /* queue row styles */
 
+.horizontal-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+/* Show the scrollbar for horizontal scrolling */
+.horizontal-scroll::-webkit-scrollbar {
+    height: 12px;
+    margin-top: 1rem;
+}
+
+/* Track */
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: var(--grey);
+    border: 1px solid var(--text-light);
+}
+
+/* Handle */
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+}
+
+/* Handle on hover */
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+
 /* Style the select field */
 select {
     padding: 8px;
