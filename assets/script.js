@@ -122,6 +122,7 @@ class UIManager {
         this.algorithmRadios = document.querySelectorAll('input[name="algorithm"]');
         this.processAttributesBody = document.getElementById('process-attributes-body');
         this.queueAttributesBody = document.getElementById('queue-attributes-body');
+        this.queuesContainer = document.getElementById('queues');
 
         this.initializeEventListeners();
     }
@@ -156,27 +157,20 @@ class UIManager {
     handleQueueInputChange() {
         const numberOfQueues = parseInt(this.nQueuesInput.value);
 
-        // Clear existing rows from the table body
-        this.queueAttributesBody.innerHTML = '';
+        // Clear existing queues
+        this.queuesContainer.innerHTML = '';
 
-        // Add new rows based on the number of queues
+        // Add new queues
         for (let i = 1; i <= numberOfQueues; i++) {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>Q${i}</td>
-                <td>
-                    <select class="form-select" name="algorithm_q${i}">
-                        <option value="" disabled selected>Choose</option> 
-                        <option value="fcfs">FCFS</option>
-                        <option value="sjf">SJF</option>
-                        <option value="srjf">SRJF</option>
-                        <option value="priority">Priority</option>
-                        <option value="rr">RR</option>
-                    </select>
-                </td>
-                <td><input type="number" name="priority_q${i}" min="0"></td>
+            const newQueueContainer = document.createElement('div');
+            newQueueContainer.classList.add('queue-container');
+            newQueueContainer.innerHTML = `
+                <div class="queue-row header-text-row">
+                    <h3 class="header-text">Q${i}</h3>
+                </div>
+                <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
             `;
-            this.queueAttributesBody.appendChild(newRow);
+            this.queuesContainer.appendChild(newQueueContainer);
         }
     }
 
@@ -239,16 +233,15 @@ class UIManager {
             queueAttributesBody.appendChild(newRow);
         });
     }
-
-    startScheduler() {
-        // Start the scheduler visualization process
-    }
 }
 
 // Main program logic
 document.addEventListener("DOMContentLoaded", function () {
     // Initialize the UIManager
     const uiManager = new UIManager();
+
+    // Call handleAlgorithmChange() to apply styles on page load
+    uiManager.handleAlgorithmChange();
 
     // Add event listener for form submission to start the scheduler
     const form = document.querySelector('form');
