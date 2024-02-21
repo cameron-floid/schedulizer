@@ -188,7 +188,7 @@ class UIManager {
         }
 
         if (priorityInput && priorityInput.value) {
-            priorityInfo = `, prior=${priorityInput.value}`;
+            priorityInfo = `, Q-Priority=${priorityInput.value}`;
         }
 
         const queueHeader = document.querySelector(`#queues .queue-container:nth-child(${queueIndex}) .header-text-row .header-text`);
@@ -283,7 +283,7 @@ class UIManager {
             }
 
             if (priorityInput && priorityInput.value) {
-                priorityInfo = `, prior=${priorityInput.value})`;
+                priorityInfo = `, Q-Priority=${priorityInput.value})`;
             }
 
             const newQueueContainer = document.createElement('div');
