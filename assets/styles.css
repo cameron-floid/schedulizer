@@ -133,65 +133,42 @@
     font-style: italic;
 }
 
-/* Define @font-face rules for each font style */
-@font-face {
-    font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Thin.ttf') format('truetype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-/* Define @font-face rules for other font weights and styles */
-
 /* Apply the font-family to appropriate elements */
-body {
+body,
+h1,
+h2,
+h3,
+header,
+nav,
+ul,
+li,
+a,
+p {
     font-family: 'Montserrat Alternates', sans-serif;
 }
 
 /* Apply different font styles for different headers */
 h1 {
-    font-family: 'Montserrat Alternates', sans-serif;
-    font-weight: 700;
-    /* Example: Bold */
-    font-style: italic;
-    /* Example: Italic */
+    font: italic 700 'Montserrat Alternates', sans-serif;
 }
 
 h2 {
-    font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 400;
-    /* Example: Regular */
 }
 
 h3 {
-    font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 300;
-    /* Example: Light */
 }
 
 /* Apply different font styles for different elements */
-header {
-    font-family: 'Montserrat Alternates', sans-serif;
-}
 
-nav {
-    font-family: 'Montserrat Alternates', sans-serif;
-}
-
-ul,
-li,
-a {
-    font-family: 'Montserrat Alternates', sans-serif;
-}
-
-html {
+html,
+body {
     padding: 0;
     margin: 0;
 }
 
 body {
-    padding: 0;
-    margin: 0;
     background-color: var(--background);
 }
 
@@ -214,8 +191,8 @@ header {
     top: 0;
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 ul {
@@ -223,20 +200,21 @@ ul {
     list-style-type: none;
 }
 
-.header-col li {
-    margin: 0.5rem 0;
+.header-col {
+    margin: 0 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
-.header-col.logo a {
+.logo a {
+    display: flex;
     margin: 0;
     padding: 0;
-    display: flex;
     text-decoration: none;
 }
 
 .btn {
     text-decoration: none;
-    /* border: 1px solid var(--grey); */
     border: 1px solid transparent;
     padding: 10px;
     margin: .5rem;
@@ -257,11 +235,6 @@ ul {
     margin-right: .5rem;
 }
 
-.header-col {
-    margin: 0 1.5rem;
-    display: flex;
-}
-
 .logo-text {
     font-size: 1.5rem;
     color: var(--primary);
@@ -277,8 +250,6 @@ ul {
 .secondary-btn:hover {
     background: var(--primary);
     box-shadow: 4px 4px 0 0 var(--secondary);
-    /* border: 1px solid var(--text-light); */
-    border: 1px solid transparent;
 }
 
 footer {
@@ -300,75 +271,56 @@ footer {
     text-decoration: none;
 }
 
-
 .view-port {
     background-color: var(--background);
     display: flex;
     height: 74vh;
-    width: auto;
     justify-content: space-evenly;
     margin: 6rem 0;
 }
 
-.control-panel {
-    flex: 0.33;
+.control-panel,
+.visual-panel {
     width: 100%;
     border: 1px solid var(--secondary);
     background-color: var(--grey);
-    display: flex;
-    min-height: 150px;
-    /* Set a minimum height for the control panel */
-    overflow-y: auto;
-    /* Add vertical scroll if content exceeds the height */
 }
 
-.control-panel.scrollable {
-    overflow: hidden;
+.control-panel {
+    flex: 0.33;
+    min-height: 150px;
     overflow-y: auto;
 }
 
 .visual-panel {
     flex: .6;
-    width: 100%;
-    border: 1px solid var(--secondary);
-    background-color: var(--grey);
 }
 
-.visual-group {
-    display: flex;
+.visual-group,
+.visual-row,
+.queues {
     width: 95%;
-    margin: 1rem auto 1rem auto;
-    flex-direction: column;
+    margin: 1rem auto;
 }
 
-.visual-row:first-child {
+.first-row.queue-row {
     margin-top: 3rem;
+    margin-bottom: 2rem;
+    background: var(--primary);
 }
 
-.visual-row {
-    width: 90%;
-    margin: .5rem auto .5rem auto;
+.first-row.queue-row .header-text {
+    color: var(--text-light);
+}
+
+.queue-row {
     border: 1px solid var(--background);
     padding: .3rem;
-}
-
-.queues {
-    display: flex;
-    width: 95%;
-    margin: 1rem auto 1rem auto;
-    flex-direction: column;
+    margin: .5rem auto;
 }
 
 .queue-row.header-text-row .header-text {
     text-align: center;
-    margin: 0 auto 0 auto;
-}
-
-.queue-row {
-    overflow-x: auto;
-    width: 90%;
-    padding: .3rem;
-    margin: .5rem auto .5rem auto;
 }
 
 .process {
@@ -379,9 +331,7 @@ footer {
     font-size: .8rem;
     color: var(--text-light);
     margin: .15rem;
-    white-space: normal;
 }
-
 
 .queue {
     border: 1px solid var(--secondary);
@@ -434,7 +384,6 @@ footer {
 }
 
 .stat-row {
-    border: 1px solid var(--background);
     display: flex;
     padding: 10px;
     justify-content: space-evenly;
@@ -443,12 +392,10 @@ footer {
 .stat-box {
     flex: .3;
     background: var(--grey);
-    border: 1px solid var(--background);
     padding: 5px;
 }
 
 .stat-box .header-text {
-    margin: 0;
     padding: 5px;
     text-align: left;
     text-transform: uppercase;
@@ -464,7 +411,6 @@ footer {
     text-transform: capitalize;
     text-align: left;
     padding: 0.5rem;
-    margin: 0;
 }
 
 .metric-label::after {
@@ -481,11 +427,7 @@ footer {
     font-weight: 400;
 }
 
-.metric.clock .metric-label {
-    font-weight: 600;
-    font-size: .9rem;
-}
-
+.metric.clock .metric-label,
 .metric.clock .metric-value {
     font-weight: 500;
     font-size: .9rem;
@@ -499,11 +441,9 @@ footer {
 
 .button-group {
     display: inline-flex;
-    flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-start;
-
 }
 
 .button-group input[type="radio"] {
@@ -522,7 +462,6 @@ footer {
 .button-group input[type="radio"]:checked+label {
     background-color: var(--secondary);
     color: var(--text-light);
-    border-color: var(--grey);
 }
 
 .btn-option {
@@ -534,7 +473,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
-textarea {
+textarea,
+select {
     font-family: 'Montserrat Alternates', sans-serif;
     padding: 10px;
     margin: 0.5rem 0;
@@ -552,35 +492,26 @@ textarea {
     margin: 1rem 0.1rem 0.5rem;
 }
 
-.form-row {
-    display: flex;
-    width: 93%;
-    justify-content: space-between;
-}
-
-/* Style the input field on focus */
+/* Style input fields on focus */
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus-visible {
     border-color: var(--secondary);
     outline: none;
 }
 
-
 /* Process table */
-/* Style the table */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
 }
 
-/* Style table header */
 thead {
     color: var(--text-dark);
     border: 1px solid var(--secondary);
 }
 
-/* Style table header cells */
 th {
     padding: 10px;
     text-align: left;
@@ -588,17 +519,14 @@ th {
     font-size: 1rem;
 }
 
-/* Style table body rows */
 tbody tr:nth-child(even) {
     background-color: var(--grey);
 }
 
-/* Style table body cells */
 td {
     padding: 5px 10px;
 }
 
-/* Style input fields within the table */
 table input[type="number"] {
     font-family: 'Montserrat Alternates', sans-serif;
     padding: 5px;
@@ -609,101 +537,32 @@ table input[type="number"] {
     width: 100%;
 }
 
-/* Style input fields on focus within the table */
 table input[type="number"]:focus {
     border-color: var(--secondary);
     outline: none;
 }
 
-.scrollable {
-    overflow: hidden;
-    overflow-y: scroll;
-    /* max-height: 100px; */
-}
-
-/* Show the scrollbar for vertical scrolling */
-.scrollable::-webkit-scrollbar {
-    width: 12px;
-    margin-left: 1rem;
-}
-
-/* Track */
-.scrollable::-webkit-scrollbar-track {
-    background: var(--grey);
-    border: 1px solid var(--text-light);
-}
-
-/* Handle */
-.scrollable::-webkit-scrollbar-thumb {
-    background: var(--secondary);
-}
-
-/* Handle on hover */
-.scrollable::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
-}
-
-/* queue row styles */
-
+/* Scrollbar styling */
+.scrollable,
 .horizontal-scroll {
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-/* Show the scrollbar for horizontal scrolling */
+.scrollable::-webkit-scrollbar,
 .horizontal-scroll::-webkit-scrollbar {
+    width: 12px;
     height: 12px;
-    margin-top: 1rem;
+    background-color: var(--grey);
 }
 
-/* Track */
-.horizontal-scroll::-webkit-scrollbar-track {
-    background: var(--grey);
-    border: 1px solid var(--text-light);
-}
-
-/* Handle */
+.scrollable::-webkit-scrollbar-thumb,
 .horizontal-scroll::-webkit-scrollbar-thumb {
-    background: var(--secondary);
+    background-color: var(--secondary);
 }
 
-/* Handle on hover */
+.scrollable::-webkit-scrollbar-thumb:hover,
 .horizontal-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
-}
-
-
-/* Style the select field */
-select {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid var(--text-light);
-    background: transparent;
-    border-radius: 0;
-    /* Ensure sharp corners */
-}
-
-select:focus-visible {
-    outline: none;
-}
-
-/* Style the options */
-select option {
-    padding: 8px;
-    font-size: 14px;
-    background: var(--grey);
-    border: 1px solid var(--text-light);
-    border-radius: 0;
-}
-
-select:focus>option:checked {
-    background: var(--secondary) !important;
-    color: var(--text-light) !important;
-}
-
-/* Style for hovered options */
-.option-hover {
     background-color: var(--primary);
-    color: var(--text-light);
 }
