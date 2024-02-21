@@ -147,6 +147,8 @@ class UIManager {
 
         // Select FCFS algorithm after reset
         document.getElementById("fcfs").checked = true;
+
+        this.handleAlgorithmChange();
     }
 
     initializeEventListeners() {
