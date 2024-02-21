@@ -206,9 +206,80 @@ class UIManager {
                 <td><input type="number" name="priority_q${i}" min="0"></td>
             `;
             this.queueAttributesBody.appendChild(newRow);
+
+            // Add event listeners to the algorithm select and priority input
+            const algorithmSelect = newRow.querySelector(`select[name="algorithm_q${i}"]`);
+            const priorityInput = newRow.querySelector(`input[name="priority_q${i}"]`);
+
+            algorithmSelect.addEventListener('change', () => {
+                this.updateQueueInformation(i);
+            });
+
+            priorityInput.addEventListener('input', () => {
+                this.updateQueueInformation(i);
+            });
         }
 
         this.addQueueToScreen();
+    }
+
+    updateQueueInformation(queueIndex) {
+        const algorithmSelect = document.querySelector(`select[name="algorithm_q${queueIndex}"]`);
+        const priorityInput = document.querySelector(`input[name="priority_q${queueIndex}"]`);
+    
+        let algorithmInfo = '';
+        let priorityInfo = '';
+    
+        if (algorithmSelect && algorithmSelect.value) {
+            algorithmInfo = `: ${algorithmSelect.options[algorithmSelect.selectedIndex].text}`;
+        }
+    
+        if (priorityInput && priorityInput.value) {
+            priorityInfo = `, prior=${priorityInput.value}`;
+        }
+    
+        const queueHeader = document.querySelector(`#queues .queue-container:nth-child(${queueIndex}) .header-text-row .header-text`);
+        if (queueHeader) {
+            queueHeader.textContent = `Q${queueIndex} ${algorithmInfo} ${priorityInfo}`;
+        }
+    
+        // Update queue object
+        const selectedAlgorithm = algorithmSelect.value;
+        const selectedPriority = priorityInput.value;
+    
+        if (this.scheduler && this.scheduler.queues.length >= queueIndex) {
+            const queue = this.scheduler.queues[queueIndex - 1];
+            queue.algorithm = selectedAlgorithm;
+            queue.priority = selectedPriority;
+        }
+    
+        // Update process objects in the queue
+        const queueRow = document.getElementById(`queue_${queueIndex}_row`);
+        if (queueRow) {
+            const processes = queueRow.querySelectorAll('.process');
+            processes.forEach((processElement, index) => {
+                const processId = processElement.querySelector('.process-label').textContent;
+                const process = this.findProcessById(processId);
+                if (process) {
+                    process.updateQueue(`Q${queueIndex}`);
+                    process.updatePriority(selectedPriority);
+                }
+            });
+        }
+    }
+
+    findProcessById(processId) {
+        // Iterate over all queues
+        for (const queue of this.scheduler.queues) {
+            // Iterate over all processes in the current queue
+            for (const process of queue.processes) {
+                // Check if the process ID matches the given ID
+                if (process.id === processId) {
+                    return process; // Return the matching process
+                }
+            }
+        }
+        return null; // Return null if no matching process is found
     }
 
     handleAlgorithmChange() {
@@ -272,17 +343,38 @@ class UIManager {
 
     addQueueToScreen() {
         const numberOfQueues = parseInt(this.nQueuesInput.value);
+        console.log("Number of queues:", numberOfQueues);
 
         // Clear existing queues
         this.queuesContainer.innerHTML = '';
 
         // Add new queues
         for (let i = 1; i <= numberOfQueues; i++) {
+            const algorithmSelect = document.querySelector(`select[name="algorithm_q${i}"]`);
+            console.log(`Algorithm select for queue ${i}:`, algorithmSelect);
+
+            const priorityInput = document.querySelector(`input[name="priority_q${i}"]`);
+            console.log(`Priority input for queue ${i}:`, priorityInput);
+
+            let algorithmInfo = '';
+            let priorityInfo = '';
+
+            if (algorithmSelect && algorithmSelect.value) {
+                algorithmInfo = `(${algorithmSelect.options[algorithmSelect.selectedIndex].text}`;
+            }
+
+            if (priorityInput && priorityInput.value) {
+                priorityInfo = `, prior=${priorityInput.value})`;
+            }
+
+            console.log(`Algorithm info for queue ${i}:`, algorithmInfo);
+            console.log(`Priority info for queue ${i}:`, priorityInfo);
+
             const newQueueContainer = document.createElement('div');
             newQueueContainer.classList.add('queue-container');
             newQueueContainer.innerHTML = `
                 <div class="queue-row header-text-row">
-                    <h3 class="header-text">Q${i}</h3>
+                    <h3 class="header-text">Q${i} ${algorithmInfo} ${priorityInfo}</h3>
                 </div>
                 <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
             `;
