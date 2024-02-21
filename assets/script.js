@@ -104,7 +104,7 @@ class Scheduler {
         return this.queues;
     }
 
-    
+
     // Method to clear all queues from the scheduler
     clearQueues() {
         this.queues = [];
@@ -114,7 +114,6 @@ class Scheduler {
 }
 
 
-// Define the UIManager class
 class UIManager {
     constructor() {
         // Initialize UI elements and event listeners
@@ -126,6 +125,28 @@ class UIManager {
         this.queuesContainer = document.getElementById('queues');
 
         this.initializeEventListeners();
+    }
+
+    handleReset() {
+        // Reset all input values
+        this.nProcessesInput.value = '';
+        this.nQueuesInput.value = '';
+        this.algorithmRadios.forEach(radio => radio.checked = false);
+
+        // Clear existing rows from the table bodies
+        this.processAttributesBody.innerHTML = '';
+        this.queueAttributesBody.innerHTML = '';
+
+        // Reset display styles
+        document.getElementById("number-of-queues-group").style.display = "none";
+        document.getElementById("queue-attributes-group").style.display = "none";
+        document.getElementById("time-quantum-group").style.display = "none";
+
+        // Clear existing queues
+        this.queuesContainer.innerHTML = '';
+
+        // Select FCFS algorithm after reset
+        document.getElementById("fcfs").checked = true;
     }
 
     initializeEventListeners() {
@@ -148,31 +169,44 @@ class UIManager {
                 <td>P${i}</td>
                 <td><input type="number" name="arrival_time_${i}" min="0"></td>
                 <td><input type="number" name="burst_time_${i}" min="0"></td>
-                <td class="priority" style="display: none;"><input type="number" name="priority_${i}" min="0"></td>
-                <td class="queue-cell" style="display: none;"><input type="number" name="queue_${i}" min="0"></td>
+                <td class="priorityCell" style="display: none;"><input type="number" name="priority_${i}" min="0"></td>
+                <td class="queueCell" style="display: none;"><input type="number" name="queue_${i}" min="0"></td>
             `;
             this.processAttributesBody.appendChild(newRow);
         }
+
+        // Toggle process attribute columns based on the selected algorithm
+        const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+        this.toggleProcessAttributeColumns(selectedAlgorithm);
     }
 
     handleQueueInputChange() {
         const numberOfQueues = parseInt(this.nQueuesInput.value);
 
-        // Clear existing queues
-        this.queuesContainer.innerHTML = '';
+        // Clear existing rows from the queue attributes table body
+        this.queueAttributesBody.innerHTML = '';
 
-        // Add new queues
+        // Add new rows to the queue attributes table
         for (let i = 1; i <= numberOfQueues; i++) {
-            const newQueueContainer = document.createElement('div');
-            newQueueContainer.classList.add('queue-container');
-            newQueueContainer.innerHTML = `
-                <div class="queue-row header-text-row">
-                    <h3 class="header-text">Q${i}</h3>
-                </div>
-                <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>Q${i}</td>
+                <td>
+                    <select class="form-select" name="algorithm_q${i}">
+                        <option value="" disabled selected>Choose</option> 
+                        <option value="fcfs">FCFS</option>
+                        <option value="sjf">SJF</option>
+                        <option value="srjf">SRJF</option>
+                        <option value="priority">Priority</option>
+                        <option value="rr">RR</option>
+                    </select>
+                </td>
+                <td><input type="number" name="priority_q${i}" min="0"></td>
             `;
-            this.queuesContainer.appendChild(newQueueContainer);
+            this.queueAttributesBody.appendChild(newRow);
         }
+
+        this.addQueueToScreen();
     }
 
     handleAlgorithmChange() {
@@ -192,49 +226,80 @@ class UIManager {
         } else {
             document.getElementById("time-quantum-group").style.display = "none";
         }
+
+        // Toggle process attribute headers and columns
+        this.toggleProcessAttributeHeaders(selectedAlgorithm);
+        this.toggleProcessAttributeColumns(selectedAlgorithm);
+
+        // Add queues to the screen based on the selected algorithm
     }
 
-    updateProcessAttributesTable(processes) {
-        const processAttributesBody = document.getElementById('process-attributes-body');
-        processAttributesBody.innerHTML = ''; // Clear existing rows
+    toggleProcessAttributeHeaders(algorithm) {
+        const priorityHeader = document.getElementById('priorityHeader');
+        const queueHeader = document.getElementById('queueHeader');
 
-        processes.forEach((process, index) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>P${index + 1}</td>
-                <td><input type="number" name="arrival_time_${index + 1}" min="0" value="${process.arrivalTime}"></td>
-                <td><input type="number" name="burst_time_${index + 1}" min="0" value="${process.burstTime}"></td>
-                <td class="priority" style="display: none;"><input type="number" name="priority_${index + 1}" min="0" value="${process.priority}"></td>
-                <td class="queue-cell" style="display: none;"><input type="number" name="queue_${index + 1}" min="0" value="${process.queue}"></td>
-            `;
-            processAttributesBody.appendChild(newRow);
-        });
+        if (algorithm === "priority") {
+            priorityHeader.style.display = "table-cell";
+        } else {
+            priorityHeader.style.display = "none";
+        }
+
+        if (algorithm === "mq") {
+            queueHeader.style.display = "table-cell";
+        } else {
+            queueHeader.style.display = "none";
+        }
     }
 
-    updateQueueAttributesTable(queues) {
-        const queueAttributesBody = document.getElementById('queue-attributes-body');
-        queueAttributesBody.innerHTML = ''; // Clear existing rows
+    toggleProcessAttributeColumns(algorithm) {
+        const priorityCells = document.querySelectorAll('.priorityCell');
+        const queueCells = document.querySelectorAll('.queueCell');
 
-        queues.forEach((queue, index) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>Q${index + 1}</td>
-                <td>
-                    <select class="form-select" name="algorithm_q${index + 1}">
-                        <option value="" disabled selected>Choose</option> 
-                        <option value="fcfs" ${queue.algorithm === 'fcfs' ? 'selected' : ''}>FCFS</option>
-                        <option value="sjf" ${queue.algorithm === 'sjf' ? 'selected' : ''}>SJF</option>
-                        <option value="srjf" ${queue.algorithm === 'srjf' ? 'selected' : ''}>SRJF</option>
-                        <option value="priority" ${queue.algorithm === 'priority' ? 'selected' : ''}>Priority</option>
-                        <option value="rr" ${queue.algorithm === 'rr' ? 'selected' : ''}>RR</option>
-                    </select>
-                </td>
-                <td><input type="number" name="priority_q${index + 1}" min="0" value="${queue.priority || ''}"></td>
+        if (algorithm === "priority") {
+            priorityCells.forEach(cell => cell.style.display = "table-cell");
+        } else {
+            priorityCells.forEach(cell => cell.style.display = "none");
+        }
+
+        if (algorithm === "mq") {
+            queueCells.forEach(cell => cell.style.display = "table-cell");
+        } else {
+            queueCells.forEach(cell => cell.style.display = "none");
+        }
+    }
+
+    addQueueToScreen() {
+        const numberOfQueues = parseInt(this.nQueuesInput.value);
+
+        // Clear existing queues
+        this.queuesContainer.innerHTML = '';
+
+        // Add new queues
+        for (let i = 1; i <= numberOfQueues; i++) {
+            const newQueueContainer = document.createElement('div');
+            newQueueContainer.classList.add('queue-container');
+            newQueueContainer.innerHTML = `
+                <div class="queue-row header-text-row">
+                    <h3 class="header-text">Q${i}</h3>
+                </div>
+                <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
             `;
-            queueAttributesBody.appendChild(newRow);
-        });
+            this.queuesContainer.appendChild(newQueueContainer);
+        }
+
+        // Toggle process attribute columns based on the selected algorithm
+        const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+        this.toggleProcessAttributeColumns(selectedAlgorithm);
+    }
+
+    startScheduler() {
+        // Implement the logic to start the scheduler
+        // This method will be called when the form is submitted
+        console.log('Scheduler started!');
+        // You can add your scheduler logic here
     }
 }
+
 
 // Main program logic
 document.addEventListener("DOMContentLoaded", function () {
@@ -246,10 +311,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add event listener for form submission to start the scheduler
     const form = document.querySelector('form');
+
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent default form submission behavior
 
         // Start the scheduler visualization process
         uiManager.startScheduler();
     });
+
+    form.addEventListener('reset', function (event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Start the scheduler visualization process
+        uiManager.handleReset();
+    });
+
 });
