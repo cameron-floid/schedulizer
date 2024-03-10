@@ -37,98 +37,98 @@
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Light.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-LightItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-LightItalic.ttf') format('truetype');
     font-weight: 300;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Regular.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Italic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Medium.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-MediumItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-MediumItalic.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-SemiBold.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-SemiBoldItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-SemiBoldItalic.ttf') format('truetype');
     font-weight: 600;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Bold.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-BoldItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraBold.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-ExtraBold.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-ExtraBoldItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-ExtraBoldItalic.ttf') format('truetype');
     font-weight: 800;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-Black.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-Black.ttf') format('truetype');
     font-weight: 900;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Montserrat Alternates';
-    src: url('assets/montserrat-alternatives/MontserratAlternates-BlackItalic.ttf') format('truetype');
+    src: url('./montserrat-alternatives/MontserratAlternates-BlackItalic.ttf') format('truetype');
     font-weight: 900;
     font-style: italic;
 }
@@ -340,6 +340,10 @@ footer {
     white-space: nowrap;
 }
 
+.ganttchart {
+    padding: 1.2rem;
+}
+
 .process-label {
     position: relative;
     top: auto;
@@ -364,6 +368,14 @@ footer {
 
 .process-burst-time::before {
     content: "BT: ";
+}
+
+.exec-process .process-arrival-time::before {
+    content: "START: ";
+}
+
+.exec-process .process-burst-time::before{
+    content: "STOP: ";
 }
 
 .stats {

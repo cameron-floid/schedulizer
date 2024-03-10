@@ -146,7 +146,7 @@
                     </div>
 
                     <div class="form-row footer-btns">
-                        <input type="submit" class="btn secondary-btn" value="Visualize">
+                        <input type="button" class="btn secondary-btn" value="Visualize">
                         <input type="reset" class="btn secondary-btn" value="Reset">
                     </div>
 
@@ -181,8 +181,22 @@
                 </div>
             </div>
 
-            <div id="gantchart" class="gantchart">
+            <div id="ganttchart" class="ganttchart">
                 <!-- add gant chart with the total number of slots equal to the total number of burst times provided  -->
+                <div class="queue-row header-text-row">
+                    <h3 class="header-text">GANTT Chart</h3>
+                </div>
+                <div id="queue" class="queue-row queue horizontal-scroll">
+
+                    
+                    <div class="process exec-process">
+                        <p class="process-arrival-time">0</p>
+                        <p class="process-label">P1</p>
+                        <p class="process-burst-time">12</p>
+                    </div> 
+               
+
+                </div>
             </div>
 
             <div class="stats">
@@ -244,7 +258,7 @@
         </div>
     </footer>
 
-    <script src="assets/script.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
 
 </body>
 

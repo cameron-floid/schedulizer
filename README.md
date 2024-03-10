@@ -19,12 +19,12 @@ Schedulizer is a web-based application that visualizes various CPU scheduling al
 ## Installation
 
 1. Clone the repository:
-Save to grepper
 git clone https://github.com/cameron-floid/schedulizer
 
+
 2. Navigate to the project directory:
-Save to grepper
 cd schedulizer
+
 
 3. Open the `index.html` file in your web browser.
 
@@ -37,6 +37,14 @@ cd schedulizer
 5. Click the "Visualize" button to observe the execution of processes using the selected algorithm.
 6. Explore the Gantt chart and observe the scheduling behavior.
 7. Click the "Reset" button to clear the input fields and start over.
+
+## How It Works
+
+- The user starts by selecting the scheduling algorithm.
+- The number of queues is set to one unless the user selects the Multi-Level Queue (MLQ) algorithm, in which case they are required to enter the number of queues for the scheduler.
+- The user inputs process parameters such as arrival time, burst time, priority, and queue number.
+- The scheduler runs every second to check if any queue has a process, and if one is found, it executes the process based on the selected algorithm, taking into account the process's priority and the specified algorithm.
+- The Gantt chart on the interface is updated whenever a process is executed, allowing the user to visualize the scheduling process.
 
 ## Contributing
 
