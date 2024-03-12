@@ -1,5 +1,6 @@
 import Scheduler from './scheduler.js';
 import Queue from './queue.js';
+import Process from './process.js';
 
 class UIManager {
     constructor() {
@@ -37,10 +38,45 @@ class UIManager {
         this.algorithmRadios.forEach(radio => radio.addEventListener("change", this.handleAlgorithmChange.bind(this)));
     }
 
+    processAttributesChanged(processIndex) {
+        const arrivalTimeInput = document.querySelector(`input[name="arrival_time_${processIndex}"]`);
+        const burstTimeInput = document.querySelector(`input[name="burst_time_${processIndex}"]`);
+        const priorityInput = document.querySelector(`input[name="priority_${processIndex}"]`);
+        const queueInputInput = document.querySelector(`input[name="queue_${processIndex}"]`);
+    
+        if (arrivalTimeInput && burstTimeInput) {
+            const arrivalTime = parseInt(arrivalTimeInput.value);
+            const burstTime = parseInt(burstTimeInput.value);
+            const queueIndex = parseInt(queueInputInput.value);
+            const priority = priorityInput.value ? parseInt(priorityInput.value) : null;
+
+
+
+            if (arrivalTime >= 0 && burstTime >= 0) {
+                const process = new Process(processIndex, arrivalTime, burstTime, priority, queueIndex);
+    
+                if (queueIndex > 0 && queueIndex <= this.scheduler.queues.length) {
+                    this.scheduler.queues[queueIndex - 1].addProcess(process);
+                    this.addProcessToScreen(process, queueIndex);
+                } else {
+
+                    // update the process queue number
+                    process.updateQueue(0);
+
+                    // add to RQ
+                    this.scheduler.queues[0].addProcess(process);
+                    this.addProcessToScreen(process, "RQ");
+                }
+            } else {
+                // alert('Arrival time and burst time must be non-negative integers.');
+            }
+        }
+    }
+
     handleProcessInputChange() {
         const numberOfProcesses = parseInt(this.nProcessesInput.value);
         this.processAttributesBody.innerHTML = '';
-
+    
         for (let i = 1; i <= numberOfProcesses; i++) {
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -50,9 +86,15 @@ class UIManager {
                 <td class="priorityCell" style="display: none;"><input type="number" name="priority_${i}" min="0"></td>
                 <td class="queueCell" style="display: none;"><input type="number" name="queue_${i}" min="0"></td>
             `;
+    
+            // Add event listener to the row
+            newRow.addEventListener('change', () => {
+                this.processAttributesChanged(i);
+            });
+    
             this.processAttributesBody.appendChild(newRow);
         }
-
+    
         const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
         this.toggleProcessAttributeColumns(selectedAlgorithm);
     }
@@ -96,7 +138,7 @@ class UIManager {
             this.addQueueToScheduler("mq", i, priority);
         }
 
-        this.addQueueToScreen();
+        this.addQueueToScreen("");
     }
 
     updateQueueInformation(queueIndex) {
@@ -159,7 +201,7 @@ class UIManager {
             case "rr":
             case "sjf":
             case "srjf":
-                const queue_name = "RS";
+                const queue_name = "RQ";
                 const queue_exists = this.scheduler.queues.find(q => q.name === queue_name);
                 if (!queue_exists) {
                     const nQ = new Queue(queue_name, selectedAlgorithm, 0);
@@ -191,6 +233,7 @@ class UIManager {
         } else {
             document.getElementById("number-of-queues-group").style.display = "none";
             document.getElementById("queue-attributes-group").style.display = "none";
+            this.addQueueToScreen("rq");
         }
         if (selectedAlgorithm === "rr") {
             document.getElementById("time-quantum-group").style.display = "block";
@@ -218,30 +261,69 @@ class UIManager {
         queueCells.forEach(cell => cell.style.display = algorithm === "mq" ? "table-cell" : "none");
     }
 
-    addQueueToScreen() {
+    addProcessToScreen(process, queueIndex) {
+
+        let queueRow;
+
+        if (queueIndex === "RQ") {
+            queueRow = document.getElementById(`rq`);
+        } else {
+            queueRow = document.getElementById(`queue_${queueIndex}_row`);
+        }
+        
+        if (queueRow) {
+            const newProcessElement = document.createElement('div');
+            newProcessElement.classList.add('process');
+            newProcessElement.innerHTML = `
+                <div class="process">
+                    <p class="process-arrival-time">${process.arrivalTime}</p>
+                    <p class="process-label">P${process.id}</p>
+                    <p class="process-burst-time">${process.burstTime}</p>
+                </div> 
+            `;
+            
+            queueRow.appendChild(newProcessElement);
+        }
+    }
+
+    addQueueToScreen(queuetype) {
         const numberOfQueues = parseInt(this.nQueuesInput.value);
         this.queuesContainer.innerHTML = '';
-        for (let i = 1; i <= numberOfQueues; i++) {
-            const algorithmSelect = document.querySelector(`select[name="algorithm_q${i}"]`);
-            const priorityInput = document.querySelector(`input[name="priority_q${i}"]`);
-            let algorithmInfo = '';
-            let priorityInfo = '';
-            if (algorithmSelect && algorithmSelect.value) {
-                algorithmInfo = `(${algorithmSelect.options[algorithmSelect.selectedIndex].text}`;
-            }
-            if (priorityInput && priorityInput.value) {
-                priorityInfo = `, Q-Priority=${priorityInput.value})`;
-            }
+        
+        if (queuetype === "rq") {
             const newQueueContainer = document.createElement('div');
             newQueueContainer.classList.add('queue-container');
             newQueueContainer.innerHTML = `
                 <div class="queue-row header-text-row">
-                    <h3 class="header-text">Q${i} ${algorithmInfo} ${priorityInfo}</h3>
+                    <h3 class="header-text">R.Q</h3>
                 </div>
-                <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
+                <div id="rq" class="queue-row queue horizontal-scroll"></div>
             `;
             this.queuesContainer.appendChild(newQueueContainer);
+        } else {
+            for (let i = 1; i <= numberOfQueues; i++) {
+                const algorithmSelect = document.querySelector(`select[name="algorithm_q${i}"]`);
+                const priorityInput = document.querySelector(`input[name="priority_q${i}"]`);
+                let algorithmInfo = '';
+                let priorityInfo = '';
+                if (algorithmSelect && algorithmSelect.value) {
+                    algorithmInfo = `(${algorithmSelect.options[algorithmSelect.selectedIndex].text}`;
+                }
+                if (priorityInput && priorityInput.value) {
+                    priorityInfo = `, Q-Priority=${priorityInput.value})`;
+                }
+                const newQueueContainer = document.createElement('div');
+                newQueueContainer.classList.add('queue-container');
+                newQueueContainer.innerHTML = `
+                    <div class="queue-row header-text-row">
+                        <h3 class="header-text">Q${i} ${algorithmInfo} ${priorityInfo}</h3>
+                    </div>
+                    <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
+                `;
+                this.queuesContainer.appendChild(newQueueContainer);
+            }
         }
+        
         const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
         this.toggleProcessAttributeColumns(selectedAlgorithm);
     }
