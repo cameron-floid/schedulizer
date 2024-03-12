@@ -1,10 +1,8 @@
 import Scheduler from './scheduler.js';
 import Queue from './queue.js';
 
-
 class UIManager {
     constructor() {
-
         this.nProcessesInput = document.querySelector('input[name="nprocesses"]');
         this.nQueuesInput = document.getElementById('nqueues');
         this.algorithmRadios = document.querySelectorAll('input[name="algorithm"]');
@@ -12,7 +10,7 @@ class UIManager {
         this.queueAttributesBody = document.getElementById('queue-attributes-body');
         this.queuesContainer = document.getElementById('queues');
 
-        this.scheduler = new Scheduler(); // Creating an instance of Scheduler here
+        this.scheduler = new Scheduler();
 
         this.initializeEventListeners();
         this.handleAlgorithmChange();
@@ -92,6 +90,10 @@ class UIManager {
             priorityInput.addEventListener('input', () => {
                 this.updateQueueInformation(i);
             });
+
+            // Add the queue to the scheduler
+            const priority = priorityInput.value;
+            this.addQueueToScheduler("mq", i, priority);
         }
 
         this.addQueueToScreen();
@@ -152,62 +154,37 @@ class UIManager {
     }
 
     addQueueToScheduler(selectedAlgorithm, queue_number, priority) {
-
         switch (selectedAlgorithm) {
             case "fcfs":
             case "rr":
             case "sjf":
             case "srjf":
-
-                // if the rq is not already in the scheduler
-                const queue_exists = this.scheduler.queues.find(q => q.name === "RS");
-
+                const queue_name = "RS";
+                const queue_exists = this.scheduler.queues.find(q => q.name === queue_name);
                 if (!queue_exists) {
-
-                    // create the new queue
-                    const nQ = new Queue("RQ", selectedAlgorithm, 0);
-
-                    // add the queue to scheduler
+                    const nQ = new Queue(queue_name, selectedAlgorithm, 0);
                     this.scheduler.addQueue(nQ);
                 }
-
                 break;
-
             case "mq":
-
-                // check if there is a queue number
                 if (queue_number) {
-
                     const queue_name = `Q${queue_number}`;
-
-                    // check if there is already a queue with the given queue number
                     const queue_exists = this.scheduler.queues.find(q => q.name === queue_name);
-
                     if (!queue_exists) {
-
-                        // create a new queue
                         const nQ = new Queue(queue_name, selectedAlgorithm, priority);
-
-                        // check 
-
-                        // add the new queue to the scheduler
                         this.scheduler.addQueue(nQ);
                     }
-
                 }
-
                 break;
             default:
-                console.log("Invald algorithm.");
+                console.log("Invalid algorithm.");
+                console.log(selectedAlgorithm);
                 break;
         }
-
     }
 
     handleAlgorithmChange() {
-
         const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
-
         if (selectedAlgorithm === "mq") {
             document.getElementById("number-of-queues-group").style.display = "block";
             document.getElementById("queue-attributes-group").style.display = "block";
@@ -215,27 +192,21 @@ class UIManager {
             document.getElementById("number-of-queues-group").style.display = "none";
             document.getElementById("queue-attributes-group").style.display = "none";
         }
-
         if (selectedAlgorithm === "rr") {
             document.getElementById("time-quantum-group").style.display = "block";
         } else {
             document.getElementById("time-quantum-group").style.display = "none";
         }
-
         this.toggleProcessAttributeHeaders(selectedAlgorithm);
         this.toggleProcessAttributeColumns(selectedAlgorithm);
-
-        // add queue to scheduler
         this.addQueueToScheduler(selectedAlgorithm);
 
         console.log(this.scheduler.queues);
     }
 
-
     toggleProcessAttributeHeaders(algorithm) {
         const priorityHeader = document.getElementById('priorityHeader');
         const queueHeader = document.getElementById('queueHeader');
-
         priorityHeader.style.display = algorithm === "priority" ? "table-cell" : "none";
         queueHeader.style.display = algorithm === "mq" ? "table-cell" : "none";
     }
@@ -243,7 +214,6 @@ class UIManager {
     toggleProcessAttributeColumns(algorithm) {
         const priorityCells = document.querySelectorAll('.priorityCell');
         const queueCells = document.querySelectorAll('.queueCell');
-
         priorityCells.forEach(cell => cell.style.display = algorithm === "priority" ? "table-cell" : "none");
         queueCells.forEach(cell => cell.style.display = algorithm === "mq" ? "table-cell" : "none");
     }
@@ -251,22 +221,17 @@ class UIManager {
     addQueueToScreen() {
         const numberOfQueues = parseInt(this.nQueuesInput.value);
         this.queuesContainer.innerHTML = '';
-
         for (let i = 1; i <= numberOfQueues; i++) {
             const algorithmSelect = document.querySelector(`select[name="algorithm_q${i}"]`);
             const priorityInput = document.querySelector(`input[name="priority_q${i}"]`);
-
             let algorithmInfo = '';
             let priorityInfo = '';
-
             if (algorithmSelect && algorithmSelect.value) {
                 algorithmInfo = `(${algorithmSelect.options[algorithmSelect.selectedIndex].text}`;
             }
-
             if (priorityInput && priorityInput.value) {
                 priorityInfo = `, Q-Priority=${priorityInput.value})`;
             }
-
             const newQueueContainer = document.createElement('div');
             newQueueContainer.classList.add('queue-container');
             newQueueContainer.innerHTML = `
@@ -277,7 +242,6 @@ class UIManager {
             `;
             this.queuesContainer.appendChild(newQueueContainer);
         }
-
         const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
         this.toggleProcessAttributeColumns(selectedAlgorithm);
     }
