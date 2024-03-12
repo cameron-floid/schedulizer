@@ -1,4 +1,5 @@
 import Scheduler from './scheduler.js';
+import Queue from './queue.js';
 
 
 class UIManager {
@@ -37,7 +38,6 @@ class UIManager {
         this.nQueuesInput.addEventListener("change", this.handleQueueInputChange.bind(this));
         this.algorithmRadios.forEach(radio => radio.addEventListener("change", this.handleAlgorithmChange.bind(this)));
     }
-
 
     handleProcessInputChange() {
         const numberOfProcesses = parseInt(this.nProcessesInput.value);
@@ -79,6 +79,7 @@ class UIManager {
                 </td>
                 <td><input type="number" name="priority_q${i}" min="0"></td>
             `;
+
             this.queueAttributesBody.appendChild(newRow);
 
             const algorithmSelect = newRow.querySelector(`select[name="algorithm_q${i}"]`);
@@ -150,6 +151,59 @@ class UIManager {
         return null;
     }
 
+    addQueueToScheduler(selectedAlgorithm, queue_number, priority) {
+
+        switch (selectedAlgorithm) {
+            case "fcfs":
+            case "rr":
+            case "sjf":
+            case "srjf":
+
+                // if the rq is not already in the scheduler
+                const queue_exists = this.scheduler.queues.find(q => q.name === "RS");
+
+                if (!queue_exists) {
+
+                    // create the new queue
+                    const nQ = new Queue("RQ", selectedAlgorithm, 0);
+
+                    // add the queue to scheduler
+                    this.scheduler.addQueue(nQ);
+                }
+
+                break;
+
+            case "mq":
+
+                // check if there is a queue number
+                if (queue_number) {
+
+                    const queue_name = `Q${queue_number}`;
+
+                    // check if there is already a queue with the given queue number
+                    const queue_exists = this.scheduler.queues.find(q => q.name === queue_name);
+
+                    if (!queue_exists) {
+
+                        // create a new queue
+                        const nQ = new Queue(queue_name, selectedAlgorithm, priority);
+
+                        // check 
+
+                        // add the new queue to the scheduler
+                        this.scheduler.addQueue(nQ);
+                    }
+
+                }
+
+                break;
+            default:
+                console.log("Invald algorithm.");
+                break;
+        }
+
+    }
+
     handleAlgorithmChange() {
 
         const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
@@ -170,6 +224,11 @@ class UIManager {
 
         this.toggleProcessAttributeHeaders(selectedAlgorithm);
         this.toggleProcessAttributeColumns(selectedAlgorithm);
+
+        // add queue to scheduler
+        this.addQueueToScheduler(selectedAlgorithm);
+
+        console.log(this.scheduler.queues);
     }
 
 

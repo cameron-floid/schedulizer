@@ -313,13 +313,15 @@ footer {
     color: var(--text-light);
 }
 
-.queue-row {
-    border: 1px solid var(--background);
+.queue-row,
+.ganttchart-row {
+    border: 1px solid var(--text-light);
     padding: .3rem;
     margin: .5rem auto;
 }
 
-.queue-row.header-text-row .header-text {
+.queue-row.header-text-row .header-text,
+.ganttchart-row.header-text-row .header-text {
     text-align: center;
 }
 
@@ -333,14 +335,15 @@ footer {
     margin: .15rem;
 }
 
-.queue {
+.queue,
+.ganttchart {
     border: 1px solid var(--secondary);
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
 }
 
-.ganttchart {
+.ganttchart-container {
     padding: 1.2rem;
 }
 
@@ -385,14 +388,14 @@ footer {
     bottom: .5rem;
     margin: auto;
     padding: 1rem;
-    border: var(--background);
+    border: var(--text-light);
     color: var(--text-light);
 }
 
 .stats .header-text {
     font-weight: 400;
     color: var(--text-light);
-    text-decoration: underline solid var(--background);
+    text-decoration: underline solid var(--text-light);
 }
 
 .stat-row {

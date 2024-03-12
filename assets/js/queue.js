@@ -6,6 +6,10 @@ class Queue {
         this.processes = [];
     }
 
+    setName(name) {
+        this.name = name;
+    }
+
     addProcess(process) {
         this.processes.push(process);
     }
