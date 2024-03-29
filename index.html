@@ -161,23 +161,34 @@
                     <h3 class="header-text">Queues</h3>
                 </div>
                 <div id="queues">
-                    <div class="queue-container">
 
+                    <!-- For R.Q -->
+                    <div id="rq-container" class="queue-container">
                         <div class="queue-row header-text-row">
                             <h3 class="header-text">R.Q</h3>
                         </div>
                         <div id="rq" class="queue-row queue horizontal-scroll">
 
                             <!-- 
-                            <div class="process">
-                                <p class="process-arrival-time">0</p>
-                                <p class="process-label">P1</p>
-                                <p class="process-burst-time">12</p>
-                            </div> 
-                        -->
+                                <div class="process">
+                                    <p class="process-arrival-time">0</p>
+                                    <p class="process-label">P1</p>
+                                    <p class="process-burst-time">12</p>
+                                </div> 
+                            -->
 
                         </div>
                     </div>
+
+                    <!-- For individual queues -->
+                    <!-- <div id="queue_${i}_container" class="queue-container">
+                        <div class="queue-row header-text-row">
+                            <h3 class="header-text">Q${i} ${algorithmInfo} ${priorityInfo}</h3>
+                        </div>
+                        <div id="queue_${i}_row" class="queue-row queue horizontal-scroll"></div>
+                    </div> -->
+
+
                 </div>
             </div>
 
@@ -187,13 +198,13 @@
                     <h3 class="header-text">Gantt Chart</h3>
                 </div>
                 <div id="ganttchart" class="ganttchart-row ganttchart horizontal-scroll">
-                    
+
                     <div class="process exec-process">
                         <p class="process-arrival-time">0</p>
                         <p class="process-label">P1</p>
                         <p class="process-burst-time">12</p>
-                    </div> 
-               
+                    </div>
+
                 </div>
             </div>
 

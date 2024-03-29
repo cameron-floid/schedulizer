@@ -26,6 +26,10 @@ class Process {
         this.state = 'Completed';
         console.log(`Process ${this.id} has completed.`);
     }
+
+    hasQueue() {
+        return this.queueNumber !== undefined && this.queueNumber !== null;
+    }
 }
 
 export default Process;

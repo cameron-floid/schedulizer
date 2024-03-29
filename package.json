@@ -1,0 +1,19 @@
+{
+  "name": "schedulizer",
+  "version": "1.0.0",
+  "description": "Schedulizer is a web-based application that visualizes various CPU scheduling algorithms. It provides a user-friendly interface to input process parameters and select different scheduling algorithms to observe their behavior visually.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@cameron_git:cameron-floid/schedulizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^5.1.0"
+  }
+}

@@ -11,14 +11,30 @@ class Scheduler {
 
     execute() {
         // Check for processes in queues every second
-        this.processInterval = setInterval(() => {
-            this.checkQueues();
-        }, 1000);
+        // this.processInterval = setInterval(() => {
+        //     this.checkQueues();
+        // }, 1000);
     }
 
     addQueue(queue) {
         this.queues.push(queue);
     }
+
+    queue_exists(name) {
+        return this.queues.find(queue => queue.name === name);
+    }
+
+    findProcessById(processId, queueIndex) {
+        if (queueIndex >= 0 && queueIndex < this.queues.length) {
+            const queue = this.queues[queueIndex];
+            for (const process of queue.processes) {
+                if (process.id === processId) {
+                    return process;
+                }
+            }
+        }
+        return null;
+    }    
 
     removeQueue(queueName) {
         this.queues = this.queues.filter(queue => queue.name !== queueName);
