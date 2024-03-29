@@ -35,7 +35,7 @@ class UIManager {
 
   initializeEventListeners() {
     this.nProcessesInput.addEventListener("change", this.handleProcessInputChange.bind(this));
-    this.nQueuesInput.addEventListener("change", this.handleQueueInputChange.bind(this));
+    this.nQueuesInput.addEventListener("change", this.handleQueueInputChange.bind(this)); // Add this line
     this.algorithmRadios.forEach(radio => radio.addEventListener("change", this.handleAlgorithmChange.bind(this)));
   }
 
@@ -44,42 +44,91 @@ class UIManager {
     const burstTimeInput = document.querySelector(`input[name="burst_time_${processIndex}"]`);
     const priorityInput = document.querySelector(`input[name="priority_${processIndex}"]`);
     const queueInputInput = document.querySelector(`input[name="queue_${processIndex}"]`);
-
-    if (arrivalTimeInput && burstTimeInput) {
+  
+    if (arrivalTimeInput && burstTimeInput && queueInputInput) {
       const arrivalTime = parseInt(arrivalTimeInput.value);
       const burstTime = parseInt(burstTimeInput.value);
       const queueIndex = parseInt(queueInputInput.value);
-      const priority = priorityInput.value ? parseInt(priorityInput.value) : null;
-
+      let priority = null;
+  
+      if (priorityInput) {
+        if (document.querySelector('input[name="algorithm"]:checked')) {
+          const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+          if (selectedAlgorithm === "priority") {
+            priority = priorityInput.value ? parseInt(priorityInput.value) : null;
+          }
+        }
+      }
+  
       if (arrivalTime >= 0 && burstTime >= 0) {
         // Create the new process
-        const process = new Process(processIndex, arrivalTime, burstTime, priority, queueIndex);
-
-        // Add the process to its individual queue
-        if (queueIndex > 0 && queueIndex <= this.scheduler.queues.length) {
+        let process;
+        if (!isNaN(queueIndex) && queueIndex > 0 && queueIndex <= this.scheduler.queues.length) {
+          process = new Process(processIndex, arrivalTime, burstTime, priority, queueIndex);
           this.scheduler.queues[queueIndex - 1].addProcess(process);
           this.addProcessToScreen(process, queueIndex);
         } else {
-          // If the specified queue doesn't exist, add it to the ready queue (RQ) only if the process is not already added to a queue
-          if (!process.hasQueue()) {
-            process.updateQueue(0);
-            this.scheduler.queues[0].addProcess(process);
-            this.addProcessToScreen(process, "RQ");
-          }
-        }
-
-        // Add all processes in individual queues to the ready queue as well
-        this.scheduler.queues.slice(1).forEach(queue => {
-          queue.processes.forEach(process => {
-            if (!process.hasQueue()) {
+          process = new Process(processIndex, arrivalTime, burstTime, null, null);
+          if (document.querySelector('input[name="algorithm"]:checked')) {
+            const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+            if (selectedAlgorithm !== "priority") {
               this.scheduler.queues[0].addProcess(process);
               this.addProcessToScreen(process, "RQ");
             }
-          });
-        });
-
+          }
+        }
+  
+        // Add all processes in individual queues to the ready queue as well
+        if (document.querySelector('input[name="algorithm"]:checked')) {
+          const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+          if (selectedAlgorithm !== "priority") {
+            this.scheduler.queues.slice(1).forEach(queue => {
+              queue.processes.forEach(process => {
+                if (!this.scheduler.queues[0].hasProcessWithId(process.id)) {
+                  this.scheduler.queues[0].addProcess(process);
+                  this.addProcessToScreen(process, "RQ");
+                }
+              });
+            });
+          }
+        }
       }
     }
+  }
+  
+
+  toggleProcessAttributeHeaders(algorithm) {
+    const priorityHeader = document.getElementById('priorityHeader');
+    const queueHeader = document.getElementById('queueHeader');
+    priorityHeader.style.display = algorithm === "priority" ? "table-cell" : "none";
+    queueHeader.style.display = algorithm === "mq" ? "table-cell" : "none";
+  }
+
+  toggleProcessAttributeColumns(algorithm) {
+    const priorityCells = document.querySelectorAll('.priorityCell');
+    const queueCells = document.querySelectorAll('.queueCell');
+    priorityCells.forEach(cell => cell.style.display = algorithm === "priority" ? "table-cell" : "none");
+    queueCells.forEach(cell => cell.style.display = algorithm === "mq" ? "table-cell" : "none");
+  }
+
+  handleAlgorithmChange() {
+    const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+    if (selectedAlgorithm === "mq") {
+      document.getElementById("number-of-queues-group").style.display = "block";
+      document.getElementById("queue-attributes-group").style.display = "block";
+    } else {
+      document.getElementById("number-of-queues-group").style.display = "none";
+      document.getElementById("queue-attributes-group").style.display = "none";
+      this.addQueueToScreen("rq");
+    }
+    if (selectedAlgorithm === "rr") {
+      document.getElementById("time-quantum-group").style.display = "block";
+    } else {
+      document.getElementById("time-quantum-group").style.display = "none";
+    }
+    this.toggleProcessAttributeHeaders(selectedAlgorithm);
+    this.toggleProcessAttributeColumns(selectedAlgorithm);
+    this.addQueueToScheduler(selectedAlgorithm);
   }
 
   handleProcessInputChange() {
@@ -88,7 +137,7 @@ class UIManager {
 
     for (let i = 1; i <= numberOfProcesses; i++) {
       const newRow = document.createElement('tr');
-      newRow.innerHTML = Templates.processAttributesTemplate(i);
+      newRow.innerHTML = Templates.processRowTemplate(i);
 
       // Add event listener to the row
       newRow.addEventListener('change', () => {
@@ -104,11 +153,20 @@ class UIManager {
 
   handleQueueInputChange() {
     const numberOfQueues = parseInt(this.nQueuesInput.value);
+    const previousNumberOfQueues = this.scheduler.queues.length;
+
+    // Remove excess queue elements from the UI
+    const numberOfQueuesToRemove = Math.max(0, previousNumberOfQueues - numberOfQueues);
+    this.removeQueueFromScreen(numberOfQueuesToRemove);
+
+    // Remove excess queues from the scheduler
+    this.removeQueuesFromScheduler(numberOfQueuesToRemove);
+
     this.queueAttributesBody.innerHTML = '';
 
     for (let i = 1; i <= numberOfQueues; i++) {
       const newRow = document.createElement('tr');
-      newRow.innerHTML = Templates.queueAttributesTemplate(i);
+      newRow.innerHTML = Templates.queueRowTemplate(i);
 
       this.queueAttributesBody.appendChild(newRow);
 
@@ -123,12 +181,15 @@ class UIManager {
         this.updateQueueInformation(i);
       });
 
-      // Add the queue to the scheduler
+      // Add the queue to the scheduler if it doesn't already exist
       const priority = priorityInput.value;
       this.addQueueToScheduler("mq", i, priority);
     }
 
-    this.addQueueToScreen("");
+    // Add the queues to the display panel
+    this.addQueueToScreen("mq");
+
+    this.renderQueues();
   }
 
   updateQueueInformation(queueIndex) {
@@ -185,12 +246,33 @@ class UIManager {
     return null;
   }
 
+  addProcessToScreen(process, queueIndex) {
+    let queueContainer;
+
+    if (queueIndex === "RQ") {
+      // If the queueIndex is "RQ", find the ready queue container
+      queueContainer = document.querySelector(`#queues .queue-container.ready-queue`);
+    } else {
+      // Otherwise, find the queue container corresponding to the given queueIndex
+      queueContainer = document.querySelector(`#queues .queue-container:nth-child(${queueIndex})`);
+    }
+
+    if (queueContainer) {
+      // Use the process element template to create the process element
+      const processElementTemplate = Templates.processElementTemplate(process.id, process.arrivalTime, process.burstTime);
+      queueContainer.insertAdjacentHTML('beforeend', processElementTemplate);
+    }
+
+    console.log(this.scheduler.queues);
+  }
+
   addQueueToScheduler(selectedAlgorithm, queue_number, priority) {
     switch (selectedAlgorithm) {
       case "fcfs":
       case "rr":
       case "sjf":
       case "srjf":
+      case "priority":
         const queue_name = "RQ";
         const queue_exists = this.scheduler.queues.find(q => q.name === queue_name);
         if (!queue_exists) {
@@ -212,68 +294,8 @@ class UIManager {
         console.log("Invalid algorithm ", selectedAlgorithm);
         break;
     }
-  }
 
-  handleAlgorithmChange() {
-    const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
-    if (selectedAlgorithm === "mq") {
-      document.getElementById("number-of-queues-group").style.display = "block";
-      document.getElementById("queue-attributes-group").style.display = "block";
-    } else {
-      document.getElementById("number-of-queues-group").style.display = "none";
-      document.getElementById("queue-attributes-group").style.display = "none";
-      this.addQueueToScreen("rq");
-    }
-    if (selectedAlgorithm === "rr") {
-      document.getElementById("time-quantum-group").style.display = "block";
-    } else {
-      document.getElementById("time-quantum-group").style.display = "none";
-    }
-    this.toggleProcessAttributeHeaders(selectedAlgorithm);
-    this.toggleProcessAttributeColumns(selectedAlgorithm);
-    this.addQueueToScheduler(selectedAlgorithm);
-  }
-
-  toggleProcessAttributeHeaders(algorithm) {
-    const priorityHeader = document.getElementById('priorityHeader');
-    const queueHeader = document.getElementById('queueHeader');
-    priorityHeader.style.display = algorithm === "priority" ? "table-cell" : "none";
-    queueHeader.style.display = algorithm === "mq" ? "table-cell" : "none";
-  }
-
-  toggleProcessAttributeColumns(algorithm) {
-    const priorityCells = document.querySelectorAll('.priorityCell');
-    const queueCells = document.querySelectorAll('.queueCell');
-    priorityCells.forEach(cell => cell.style.display = algorithm === "priority" ? "table-cell" : "none");
-    queueCells.forEach(cell => cell.style.display = algorithm === "mq" ? "table-cell" : "none");
-  }
-
-  addProcessToScreen(process, queueIndex) {
-    let queueRow;
-
-    if (queueIndex === "RQ") {
-      queueRow = document.getElementById(`rq`);
-    } else {
-      queueRow = document.getElementById(`queue_${queueIndex}_row`);
-    }
-
-    if (queueRow) {
-      const existingProcessElement = document.getElementById(`pro_${queueIndex}_${process.id}`);
-
-      if (existingProcessElement) {
-        // If the process element already exists, update its content
-        existingProcessElement.querySelector('.process-arrival-time').textContent = process.arrivalTime;
-        existingProcessElement.querySelector('.process-burst-time').textContent = process.burstTime;
-      } else {
-        // If the process element does not exist, create a new one
-        const newProcessElement = document.createElement('div');
-        newProcessElement.classList.add('process');
-        newProcessElement.id = `pro_${queueIndex}_${process.id}`;
-        newProcessElement.innerHTML = Templates.processElementTemplate(process.id, process.arrivalTime, process.burstTime);
-
-        queueRow.appendChild(newProcessElement);
-      }
-    }
+    console.log(this.scheduler.queues);
   }
 
   addQueueToScreen(queuetype) {
@@ -281,9 +303,10 @@ class UIManager {
     this.queuesContainer.innerHTML = '';
 
     if (queuetype === "rq") {
+      const readyQueueTemplate = Templates.queueContainerTemplate("R.Q", "", "");
       const newQueueContainer = document.createElement('div');
       newQueueContainer.classList.add('queue-container');
-      newQueueContainer.innerHTML = Templates.queueContainerTemplate(0, '', '');
+      newQueueContainer.innerHTML = readyQueueTemplate;
       this.queuesContainer.appendChild(newQueueContainer);
     } else {
       for (let i = 1; i <= numberOfQueues; i++) {
@@ -297,15 +320,44 @@ class UIManager {
         if (priorityInput && priorityInput.value) {
           priorityInfo = `, Q-Priority=${priorityInput.value})`;
         }
+        const queueContainerTemplate = Templates.queueContainerTemplate(`Q${i}`, algorithmInfo, priorityInfo);
         const newQueueContainer = document.createElement('div');
         newQueueContainer.classList.add('queue-container');
-        newQueueContainer.innerHTML = Templates.queueContainerTemplate(i, algorithmInfo, priorityInfo);
+        newQueueContainer.innerHTML = queueContainerTemplate;
         this.queuesContainer.appendChild(newQueueContainer);
       }
     }
 
     const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
     this.toggleProcessAttributeColumns(selectedAlgorithm);
+  }
+
+  removeQueueFromScreen(numberOfQueuesToRemove) {
+    for (let i = 1; i <= numberOfQueuesToRemove; i++) {
+      const queueContainerToRemove = document.querySelector(`#queues .queue-container:nth-child(${i})`);
+      if (queueContainerToRemove) {
+        queueContainerToRemove.remove();
+      }
+    }
+  }
+
+  removeQueuesFromScheduler(numberOfQueuesToRemove) {
+    for (let i = 0; i < numberOfQueuesToRemove; i++) {
+      const removedQueue = this.scheduler.queues.pop();
+      if (removedQueue) {
+        // Remove processes from removed queue
+        removedQueue.processes.forEach(process => {
+          // Update process queue information
+          process.updateQueue(null);
+          process.updatePriority(null);
+        });
+      }
+    }
+  }
+
+  renderQueues() {
+    const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+    this.addQueueToScreen(selectedAlgorithm === "mq" ? "" : "rq");
   }
 
   startScheduler() {
